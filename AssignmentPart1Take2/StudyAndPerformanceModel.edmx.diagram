@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="517bd59710714e3d9a2e032572d8e3eb" Name="Diagram1" ZoomLevel="83" >
+        <EntityTypeShape EntityType="StudyAndPerformanceModel.Student" Width="2.25" PointX="0.5" PointY="0.5" />
+        <EntityTypeShape EntityType="StudyAndPerformanceModel.Course" Width="1.5" PointX="4" PointY="0.5" />
+        <AssociationConnector Association="StudyAndPerformanceModel.CourseStudent" />
+        <EntityTypeShape EntityType="StudyAndPerformanceModel.Results" Width="2.25" PointX="0.5" PointY="3.75" />
+        <AssociationConnector Association="StudyAndPerformanceModel.StudentResults" />
+        <EntityTypeShape EntityType="StudyAndPerformanceModel.Module" Width="2" PointX="0.5" PointY="6.125" />
+        <AssociationConnector Association="StudyAndPerformanceModel.ModuleResults" />
+        <EntityTypeShape EntityType="StudyAndPerformanceModel.Lecturer" Width="1.5" PointX="6.25" PointY="3.75" />
+        <AssociationConnector Association="StudyAndPerformanceModel.LecturerModule" />
+        <AssociationConnector Association="StudyAndPerformanceModel.CourseModule" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

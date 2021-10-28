@@ -1,0 +1,379 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="StudyAndPerformanceModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="StudyAndPerformanceModelStoreContainer">
+    <EntitySet Name="Students" EntityType="StudyAndPerformanceModel.Store.Students" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Courses" EntityType="StudyAndPerformanceModel.Store.Courses" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Results" EntityType="StudyAndPerformanceModel.Store.Results" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Modules" EntityType="StudyAndPerformanceModel.Store.Modules" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Lecturers" EntityType="StudyAndPerformanceModel.Store.Lecturers" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="CourseStudent" Association="StudyAndPerformanceModel.Store.CourseStudent">
+      <End Role="Course" EntitySet="Courses" />
+      <End Role="Student" EntitySet="Students" />
+    </AssociationSet>
+    <AssociationSet Name="StudentResults" Association="StudyAndPerformanceModel.Store.StudentResults">
+      <End Role="Student" EntitySet="Students" />
+      <End Role="Results" EntitySet="Results" />
+    </AssociationSet>
+    <AssociationSet Name="ModuleResults" Association="StudyAndPerformanceModel.Store.ModuleResults">
+      <End Role="Module" EntitySet="Modules" />
+      <End Role="Results" EntitySet="Results" />
+    </AssociationSet>
+    <AssociationSet Name="LecturerModule" Association="StudyAndPerformanceModel.Store.LecturerModule">
+      <End Role="Lecturer" EntitySet="Lecturers" />
+      <End Role="Module" EntitySet="Modules" />
+    </AssociationSet>
+    <AssociationSet Name="CourseModule" Association="StudyAndPerformanceModel.Store.CourseModule">
+      <End Role="Course" EntitySet="Courses" />
+      <End Role="Module" EntitySet="Modules" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Students">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StudentNumber" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Surname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="EmailAddress" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ContactNumber" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CourseId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Courses">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CourseCode" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="CourseName" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Results">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FinalResult" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="StudentId" Type="int" Nullable="false" />
+    <Property Name="ModuleId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Modules">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ModuleCode" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ModuleName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LecturerId" Type="int" Nullable="false" />
+    <Property Name="CourseId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Lecturers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StaffNumber" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Surname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="EmailAddress" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ContactNumber" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="CourseStudent">
+    <End Role="Course" Type="StudyAndPerformanceModel.Store.Courses" Multiplicity="1" />
+    <End Role="Student" Type="StudyAndPerformanceModel.Store.Students" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Course">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Student">
+        <PropertyRef Name="CourseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="StudentResults">
+    <End Role="Student" Type="StudyAndPerformanceModel.Store.Students" Multiplicity="1" />
+    <End Role="Results" Type="StudyAndPerformanceModel.Store.Results" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Results">
+        <PropertyRef Name="StudentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ModuleResults">
+    <End Role="Module" Type="StudyAndPerformanceModel.Store.Modules" Multiplicity="1" />
+    <End Role="Results" Type="StudyAndPerformanceModel.Store.Results" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Module">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Results">
+        <PropertyRef Name="ModuleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="LecturerModule">
+    <End Role="Lecturer" Type="StudyAndPerformanceModel.Store.Lecturers" Multiplicity="1" />
+    <End Role="Module" Type="StudyAndPerformanceModel.Store.Modules" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lecturer">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Module">
+        <PropertyRef Name="LecturerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CourseModule">
+    <End Role="Course" Type="StudyAndPerformanceModel.Store.Courses" Multiplicity="1" />
+    <End Role="Module" Type="StudyAndPerformanceModel.Store.Modules" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Course">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Module">
+        <PropertyRef Name="CourseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="StudyAndPerformanceModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="StudyAndPerformanceModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Students" EntityType="StudyAndPerformanceModel.Student" />
+          <EntitySet Name="Courses" EntityType="StudyAndPerformanceModel.Course" />
+          <AssociationSet Name="CourseStudent" Association="StudyAndPerformanceModel.CourseStudent">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="Student" EntitySet="Students" />
+          </AssociationSet>
+          <EntitySet Name="Results" EntityType="StudyAndPerformanceModel.Results" />
+          <AssociationSet Name="StudentResults" Association="StudyAndPerformanceModel.StudentResults">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="Results" EntitySet="Results" />
+          </AssociationSet>
+          <EntitySet Name="Modules" EntityType="StudyAndPerformanceModel.Module" />
+          <AssociationSet Name="ModuleResults" Association="StudyAndPerformanceModel.ModuleResults">
+            <End Role="Module" EntitySet="Modules" />
+            <End Role="Results" EntitySet="Results" />
+          </AssociationSet>
+          <EntitySet Name="Lecturers" EntityType="StudyAndPerformanceModel.Lecturer" />
+          <AssociationSet Name="LecturerModule" Association="StudyAndPerformanceModel.LecturerModule">
+            <End Role="Lecturer" EntitySet="Lecturers" />
+            <End Role="Module" EntitySet="Modules" />
+          </AssociationSet>
+          <AssociationSet Name="CourseModule" Association="StudyAndPerformanceModel.CourseModule">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="Module" EntitySet="Modules" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentNumber" Type="String" Nullable="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" />
+          <Property Name="Surname" Type="String" Nullable="false" />
+          <Property Name="EmailAddress" Type="String" Nullable="false" />
+          <Property Name="ContactNumber" Type="String" Nullable="false" />
+          <NavigationProperty Name="Course" Relationship="StudyAndPerformanceModel.CourseStudent" FromRole="Student" ToRole="Course" />
+          <Property Name="CourseId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Results" Relationship="StudyAndPerformanceModel.StudentResults" FromRole="Student" ToRole="Results" />
+        </EntityType>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CourseCode" Type="String" Nullable="false" />
+          <Property Name="CourseName" Type="String" Nullable="false" />
+          <NavigationProperty Name="Students" Relationship="StudyAndPerformanceModel.CourseStudent" FromRole="Course" ToRole="Student" />
+          <NavigationProperty Name="Modules" Relationship="StudyAndPerformanceModel.CourseModule" FromRole="Course" ToRole="Module" />
+        </EntityType>
+        <Association Name="CourseStudent">
+          <End Type="StudyAndPerformanceModel.Course" Role="Course" Multiplicity="1" />
+          <End Type="StudyAndPerformanceModel.Student" Role="Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Results">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FinalResult" Type="String" Nullable="false" />
+          <NavigationProperty Name="Student" Relationship="StudyAndPerformanceModel.StudentResults" FromRole="Results" ToRole="Student" />
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Module" Relationship="StudyAndPerformanceModel.ModuleResults" FromRole="Results" ToRole="Module" />
+          <Property Name="ModuleId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="StudentResults">
+          <End Type="StudyAndPerformanceModel.Student" Role="Student" Multiplicity="1" />
+          <End Type="StudyAndPerformanceModel.Results" Role="Results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Results">
+              <PropertyRef Name="StudentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Module">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ModuleCode" Type="String" Nullable="false" />
+          <Property Name="ModuleName" Type="String" Nullable="false" />
+          <NavigationProperty Name="Results" Relationship="StudyAndPerformanceModel.ModuleResults" FromRole="Module" ToRole="Results" />
+          <NavigationProperty Name="Lecturer" Relationship="StudyAndPerformanceModel.LecturerModule" FromRole="Module" ToRole="Lecturer" />
+          <Property Name="LecturerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Course" Relationship="StudyAndPerformanceModel.CourseModule" FromRole="Module" ToRole="Course" />
+          <Property Name="CourseId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="ModuleResults">
+          <End Type="StudyAndPerformanceModel.Module" Role="Module" Multiplicity="1" />
+          <End Type="StudyAndPerformanceModel.Results" Role="Results" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Module">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Results">
+              <PropertyRef Name="ModuleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Lecturer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StaffNumber" Type="String" Nullable="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" />
+          <Property Name="Surname" Type="String" Nullable="false" />
+          <Property Name="EmailAddress" Type="String" Nullable="false" />
+          <Property Name="ContactNumber" Type="String" Nullable="false" />
+          <NavigationProperty Name="Modules" Relationship="StudyAndPerformanceModel.LecturerModule" FromRole="Lecturer" ToRole="Module" />
+        </EntityType>
+        <Association Name="LecturerModule">
+          <End Type="StudyAndPerformanceModel.Lecturer" Role="Lecturer" Multiplicity="1" />
+          <End Type="StudyAndPerformanceModel.Module" Role="Module" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lecturer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Module">
+              <PropertyRef Name="LecturerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CourseModule">
+          <End Type="StudyAndPerformanceModel.Course" Role="Course" Multiplicity="1" />
+          <End Type="StudyAndPerformanceModel.Module" Role="Module" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Module">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="StudyAndPerformanceModelStoreContainer" CdmEntityContainer="StudyAndPerformanceModelContainer">
+    <EntitySetMapping Name="Students">
+      <EntityTypeMapping TypeName="IsTypeOf(StudyAndPerformanceModel.Student)">
+        <MappingFragment StoreEntitySet="Students">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="StudentNumber" ColumnName="StudentNumber" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="Surname" ColumnName="Surname" />
+          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+          <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+          <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Courses">
+      <EntityTypeMapping TypeName="IsTypeOf(StudyAndPerformanceModel.Course)">
+        <MappingFragment StoreEntitySet="Courses">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CourseCode" ColumnName="CourseCode" />
+          <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Results">
+      <EntityTypeMapping TypeName="IsTypeOf(StudyAndPerformanceModel.Results)">
+        <MappingFragment StoreEntitySet="Results">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FinalResult" ColumnName="FinalResult" />
+          <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+          <ScalarProperty Name="ModuleId" ColumnName="ModuleId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Modules">
+      <EntityTypeMapping TypeName="IsTypeOf(StudyAndPerformanceModel.Module)">
+        <MappingFragment StoreEntitySet="Modules">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ModuleCode" ColumnName="ModuleCode" />
+          <ScalarProperty Name="ModuleName" ColumnName="ModuleName" />
+          <ScalarProperty Name="LecturerId" ColumnName="LecturerId" />
+          <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Lecturers">
+      <EntityTypeMapping TypeName="IsTypeOf(StudyAndPerformanceModel.Lecturer)">
+        <MappingFragment StoreEntitySet="Lecturers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="StaffNumber" ColumnName="StaffNumber" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="Surname" ColumnName="Surname" />
+          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+          <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
